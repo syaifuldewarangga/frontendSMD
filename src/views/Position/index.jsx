@@ -94,7 +94,7 @@ function Positon() {
             handleDialog(false)
             getPosition()
         }).catch((err) => {
-            console.log(err)
+            console.log(err.response)
         })
     }
 

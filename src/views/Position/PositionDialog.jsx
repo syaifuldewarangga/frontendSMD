@@ -18,6 +18,7 @@ function PositionDialog(props) {
             setData('')
         }
     }, [props.type, props.data])
+    
     const handleSubmit = (e) => {
         e.preventDefault ()
         if(props.type === 'edit') {

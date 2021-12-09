@@ -13,6 +13,8 @@ function Departement() {
     const [opendDialogDelete, setOpenDialogDelete] = useState(false)
     const [department, setDepartment] = useState([])
     const [departmentID, setDepartmentID] = useState('')
+    const [departmentDetail, setDepartmentDetail] = useState('')
+    const [type, setType] = useState('add')
     const token = localStorage.getItem('token')
 
     const getDepertment = async () => {
@@ -69,6 +71,34 @@ function Departement() {
         })
     }
 
+    const showDialogUpdate = async (ID) => {
+        setType('edit')
+        await axios.get(`${smd_url}departments/get/${ID}`, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }).then((res) => {
+            setDepartmentDetail(res.data)
+            handleDialog(true)
+        })
+    }
+
+    const handleUpdate = async (data) => {
+        await axios.put(`${smd_url}departments/update/${data.id}`, {
+            department_name: data.department_name
+        }, 
+        {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }).then(() => {
+            handleDialog(false)
+            getDepertment()
+        }).catch((err) => {
+            console.log(err.response)
+        })
+    }
+
     return (
         <Fragment>
             <Box 
@@ -78,7 +108,15 @@ function Departement() {
                     justifyContent: 'flex-end'
                 }}
             >
-                <Fab size="medium" color="primary" aria-label="add" onClick={() => handleDialog(true)}>
+                <Fab 
+                    size="medium" 
+                    color="primary" 
+                    aria-label="add" 
+                    onClick={() => {
+                        handleDialog(true)
+                        setType('add')
+                    }}
+                >
                     <AddIcon />
                 </Fab>
             </Box>
@@ -87,13 +125,17 @@ function Departement() {
                 <DepartementTable 
                     data = {department}
                     showDialogDelete = {showDialogDelete}
+                    showDialogUpdate = {showDialogUpdate}
                 />
             </Box>
 
             <DepartementDialog 
+                data = {departmentDetail}
                 open = {openDialog}
                 handleDialog = {handleDialog}
                 handleSubmit = {handleSubmit}
+                handleUpdate = {handleUpdate}
+                type = {type}
             />
 
             <DeleteDialog 

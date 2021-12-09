@@ -66,7 +66,11 @@ function DepartementTable(props) {
                                                     >
                                                             <DeleteIcon />
                                                     </Button>
-                                                    <Button variant="outlined" color="primary">
+                                                    <Button 
+                                                        variant="outlined" 
+                                                        color="primary"
+                                                        onClick={() => props.showDialogUpdate(item.id)}
+                                                    >
                                                             <EditIcon />
                                                     </Button>
                                                 </Box>
