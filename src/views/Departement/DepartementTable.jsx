@@ -20,7 +20,7 @@ const columns = [
     }
 ]
 
-function DepartementTable() {
+function DepartementTable(props) {
     return (
         <Fragment>
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -41,25 +41,39 @@ function DepartementTable() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow hover role="checkbox" tabIndex={-1} >
-                                <TableCell align="">
-                                    Departement
-                                </TableCell>
-                                <TableCell align="right">
-                                    <Box
-                                        sx={{ 
-                                            display: 'flex'
-                                        }}
-                                    >
-                                        <Button variant="outlined" color="error" sx={{ mr:2 }}>
-                                                <DeleteIcon />
-                                        </Button>
-                                        <Button variant="outlined" color="primary">
-                                                <EditIcon />
-                                        </Button>
-                                    </Box>
-                                </TableCell>
-                            </TableRow>
+                                {
+                                    props.data.map((item) => (
+                                        <TableRow 
+                                            hover 
+                                            role="checkbox" 
+                                            tabIndex={-1} 
+                                            key={item.id}
+                                        >
+                                            <TableCell align="">
+                                                {item.department_name}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Box
+                                                    sx={{ 
+                                                        display: 'flex'
+                                                    }}
+                                                >
+                                                    <Button 
+                                                        variant="outlined" 
+                                                        color="error" 
+                                                        sx={{ mr:2 }}
+                                                        onClick={() => props.showDialogDelete(item.id)}
+                                                    >
+                                                            <DeleteIcon />
+                                                    </Button>
+                                                    <Button variant="outlined" color="primary">
+                                                            <EditIcon />
+                                                    </Button>
+                                                </Box>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                }
                         </TableBody>
                     </Table>
                 </TableContainer>

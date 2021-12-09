@@ -25,6 +25,7 @@ function PositionDialog(props) {
         } else if(props.type === 'add') {
             props.handleSubmit(data)
         }
+        setData('')
     }
 
     return (

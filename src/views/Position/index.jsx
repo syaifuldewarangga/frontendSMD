@@ -70,7 +70,7 @@ function Positon() {
         })
     }
 
-    const showDialogUpadte = async (ID) => {
+    const showDialogUpdate = async (ID) => {
         setType('edit')
         await axios.get(`${smd_url}positions/get/${ID}`, {
             headers: {
@@ -125,7 +125,7 @@ function Positon() {
                     data = {position}
                     handleUpdate = {handleUpdate}
                     showDialogDelete = {showDialogDelete}
-                    showDialogUpadte = {showDialogUpadte}
+                    showDialogUpdate = {showDialogUpdate}
                 />
             </Box>
 

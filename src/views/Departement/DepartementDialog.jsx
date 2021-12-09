@@ -22,14 +22,14 @@ function DepartementDialog(props) {
                 fullWidth="true"
                 maxWidth="sm"
             >
-                <DialogTitle>Add Departement</DialogTitle>
+                <DialogTitle>Add Department</DialogTitle>
                 <form onSubmit={handleSubmit}>
                     <DialogContent>
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="departement"
-                            label="Departement"
+                            id="department_name"
+                            label="Department"
                             type="text"
                             fullWidth
                             variant="standard"

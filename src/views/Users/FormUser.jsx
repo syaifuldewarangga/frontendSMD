@@ -20,9 +20,21 @@ function FormUser(props) {
     const [data, setData] = useState('')
     const [position, setPosition] = useState([])
     const [admin, setAdmin] = useState([])
+    const [department, setDepartment] = useState([])
     const token = localStorage.getItem('token')
     const navigate = useNavigate()
     const { id } = useParams()
+    
+    const getDepartment = async () => {
+        await axios.get(smd_url + 'departments', {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }).then((res) => {
+            setDepartment(res.data)
+        })
+    }
+
     const getPosition = async () => {
         await axios.get(smd_url + 'positions', {
             headers: {
@@ -56,6 +68,7 @@ function FormUser(props) {
     useEffect(() => {
         getPosition()
         getAdmin()
+        getDepartment()
         if(props.type === 'edit') {
             getUser()
         }
@@ -212,9 +225,16 @@ function FormUser(props) {
                         value={data.department !== undefined ? data.department : ''}
                         onChange={onChange}
                     >
-                            <MenuItem value="Aplikasi">
-                                Aplikasi
-                            </MenuItem>
+                        {
+                            department.map((item) => (
+                                <MenuItem 
+                                    value={item.department_name}
+                                    key={item.id}
+                                >
+                                    {item.department_name}
+                                </MenuItem>
+                            ))
+                        }
                     </TextField>
 
                     <TextField
@@ -321,7 +341,7 @@ function FormUser(props) {
                         margin="normal"
                         name="admin"
                         onChange={onChange}
-                        value={data.admin !== undefined ? data.admin : null}
+                        value={data.admin !== undefined ? data.admin : ''}
                     >
                         {
                             admin.map((item, index) => (
@@ -377,6 +397,7 @@ function FormUser(props) {
                             <Button 
                                 variant="outlined"
                                 fullWidth
+                                href="/master-data/users"
                             >
                                 Back
                             </Button>

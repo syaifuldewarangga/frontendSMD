@@ -69,7 +69,7 @@ function PositionTable(props) {
                                                 <Button 
                                                     variant="outlined" 
                                                     color="primary"
-                                                    onClick={() => props.showDialogUpadte(item.id)}
+                                                    onClick={() => props.showDialogUpdate(item.id)}
                                                 >
                                                     <EditIcon />
                                                 </Button>
