@@ -17,6 +17,7 @@ import { useNavigate, useParams } from 'react-router'
 import { smd_url } from '../../variable/BaseUrl'
 
 function FormUser(props) {
+    const [errorData, setErrorData] = useState('')
     const [data, setData] = useState('')
     const [position, setPosition] = useState([])
     const [admin, setAdmin] = useState([])
@@ -73,6 +74,7 @@ function FormUser(props) {
             getUser()
         }
     }, [])
+
     const onChange = (e) => {
         setData({
             ...data,
@@ -135,11 +137,12 @@ function FormUser(props) {
             }).then(() => {
                 navigate('/master-data/users')
             }).catch((err) => {
-                console.log(err.response)
+                console.log(err.response.data.errors.location)
+                setErrorData(err.response.data.errors.location)
             })
         }
     }
-
+    console.log(errorData.email)
      return (
         <Card>
             <CardContent>
@@ -150,6 +153,8 @@ function FormUser(props) {
                                 fullWidth
                                 autoFocus
                                 required
+                                error={errorData.first_name !== undefined ? true : false}
+                                helperText={errorData.first_name !== undefined ? errorData.first_name[0] : null}
                                 margin="normal"
                                 id="first_name"
                                 label="First Name"
@@ -163,6 +168,8 @@ function FormUser(props) {
                             <TextField
                                 fullWidth
                                 autoFocus
+                                error={errorData.last_name !== undefined ? true : false}
+                                helperText={errorData.last_name !== undefined ? errorData.last_name[0] : null}
                                 margin="normal"
                                 id="last_name"
                                 label="Last Name"
@@ -178,6 +185,8 @@ function FormUser(props) {
                         fullWidth
                         autoFocus
                         required
+                        error={errorData.username !== undefined ? true : false}
+                        helperText={errorData.username !== undefined ? errorData.username[0] : null}
                         margin="normal"
                         id="username"
                         label="Username"
@@ -191,6 +200,8 @@ function FormUser(props) {
                         fullWidth
                         autoFocus
                         required
+                        error={errorData.email !== undefined ? true : false}
+                        helperText={errorData.email !== undefined ? errorData.email[0] : null}
                         margin="normal"
                         id="email"
                         label="Email"
@@ -204,6 +215,8 @@ function FormUser(props) {
                         fullWidth
                         autoFocus
                         required
+                        error={errorData.employee_id !== undefined ? true : false}
+                        helperText={errorData.employee_id !== undefined ? errorData.email[0] : null}
                         margin="normal"
                         id="employeeID"
                         label="Employee ID"
@@ -218,6 +231,8 @@ function FormUser(props) {
                         autoFocus
                         required
                         select
+                        error={errorData.department !== undefined ? true : false}
+                        helperText={errorData.department !== undefined ? errorData.department[0] : null}
                         id="department"
                         label="Department"
                         margin="normal"
@@ -242,6 +257,8 @@ function FormUser(props) {
                         autoFocus
                         required
                         select
+                        error={errorData.job_position !== undefined ? true : false}
+                        helperText={errorData.job_position !== undefined ? errorData.job_position[0] : null}
                         id="job_position"
                         label="Job Position"
                         margin="normal"
@@ -265,6 +282,8 @@ function FormUser(props) {
                         fullWidth
                         autoFocus
                         required
+                        error={errorData.join_date !== undefined ? true : false}
+                        helperText={errorData.join_date !== undefined ? errorData.email[0] : null}
                         margin="normal"
                         id="join_date"
                         label="Join Date"
@@ -278,6 +297,8 @@ function FormUser(props) {
                         fullWidth
                         autoFocus
                         required
+                        error={errorData.basic_salary !== undefined ? true : false}
+                        helperText={errorData.basic_salary !== undefined ? errorData.basic_salary[0] : null}
                         margin="normal"
                         id="basic_salary"
                         label="Basic Salary"
@@ -291,6 +312,8 @@ function FormUser(props) {
                     <TextField
                         fullWidth
                         autoFocus
+                        error={errorData.allowance_1 !== undefined ? true : false}
+                        helperText={errorData.allowance_1 !== undefined ? errorData.allowance_1[0] : null}
                         margin="normal"
                         id="allowance_1"
                         label="Allowance 1"
@@ -304,6 +327,8 @@ function FormUser(props) {
                     <TextField
                         fullWidth
                         autoFocus
+                        error={errorData.allowance_1 !== undefined ? true : false}
+                        helperText={errorData.allowance_1 !== undefined ? errorData.allowance_1[0] : null}
                         margin="normal"
                         id="allowance_2"
                         label="Allowance 2"
@@ -321,6 +346,7 @@ function FormUser(props) {
                         <FormLabel component="legend">Level</FormLabel>
                         <RadioGroup 
                             row 
+                            required
                             aria-label="level" 
                             name="level"
                             value={data.level !== undefined ? data.level : ''}
@@ -336,6 +362,8 @@ function FormUser(props) {
                         autoFocus
                         required
                         select
+                        error={errorData.admin !== undefined ? true : false}
+                        helperText={errorData.admin !== undefined ? errorData.admin[0] : null}
                         id="admin"
                         label="Choose Admin"
                         margin="normal"
@@ -361,6 +389,8 @@ function FormUser(props) {
                                     fullWidth
                                     autoFocus
                                     required
+                                    error={errorData.password !== undefined ? true : false}
+                                    helperText={errorData.password !== undefined ? errorData.password[0] : null}
                                     margin="normal"
                                     id="password"
                                     label="password"
@@ -373,6 +403,8 @@ function FormUser(props) {
                                     fullWidth
                                     autoFocus
                                     required
+                                    error={errorData.c_password !== undefined ? true : false}
+                                    helperText={errorData.c_password !== undefined ? errorData.c_password[0] : null}
                                     margin="normal"
                                     id="c_password"
                                     label="Confirm Password"
