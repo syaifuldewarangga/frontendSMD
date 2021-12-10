@@ -1,4 +1,4 @@
-import { Fab } from '@mui/material'
+import { Fab, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { Fragment, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
@@ -9,6 +9,11 @@ import AttendanceTable from './AttendanceTable';
 import axios from 'axios';
 import { smd_url } from '../../variable/BaseUrl';
 
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { DateRangePicker } from '@mui/lab';
+
+
 function Attendance() {
     const [attendance, setAttendance] = useState([])
 
@@ -17,13 +22,10 @@ function Attendance() {
         let today = new Date()
         today.setDate(today.getDate() - 10)
         let fromDate = today.toLocaleDateString()
-        return {
-            from: fromDate,
-            to: toDate
-        }
+        return [fromDate, toDate]
     }
 
-    const [date, setDate] = useState(currentDate())
+    const [dateRange, setDateRange] = useState(currentDate())
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const token = localStorage.getItem('token')
@@ -37,8 +39,8 @@ function Attendance() {
             params: {
                 page: page,
                 itemPerPage: rowsPerPage,
-                from: date.from,
-                to: date.to
+                from: dateRange[0],
+                to: dateRange[1]
             }
         }).then((res) => {
             setAttendance(res.data)
@@ -47,7 +49,7 @@ function Attendance() {
 
     useEffect(() => {
         getAttendance()
-    }, [page, rowsPerPage])
+    }, [page, rowsPerPage, dateRange])
 
     return (
         <Fragment>
@@ -55,10 +57,28 @@ function Attendance() {
                 sx={{ 
                     '& > :not(style)': { m: 1 } ,
                     display: 'flex',
-                    justifyContent: 'flex-end'
+                    justifyContent: 'flex-end',
+                    alignItems: 'center'
                 }}
             >
-                
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateRangePicker
+                        startText="From"
+                        endText="To"
+                        value={dateRange}
+                        onChange={(newValue) => {
+                            setDateRange(newValue)
+                        }}
+                        renderInput={(startProps, endProps) => (
+                        <React.Fragment>
+                            <TextField size="small" {...startProps} />
+                            <Box sx={{ mx: 2 }}> to </Box>
+                            <TextField size="small" {...endProps} />
+                        </React.Fragment>
+                        )}
+                    />
+                </LocalizationProvider>
+
                 <Fab size="medium" color="primary" aria-label="download">
                     <CloudDownloadIcon />
                 </Fab>

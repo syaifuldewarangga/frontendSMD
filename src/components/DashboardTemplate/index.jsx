@@ -150,7 +150,7 @@ function DashboardTemplate(props) {
                   </Badge>
                 </IconButton>
                 <IconButton sx={{ p: 0 }}>
-                  <Avatar alt={`${ auth.user.first_name } ${ auth.user.last_name }`} src="https://mui.com/static/images/avatar/2.jpg" />
+                  <Avatar alt={`${ auth.user.first_name } ${ auth.user.last_name }`} src={auth.user.profile_images} />
                 </IconButton>
                 <Typography mx={2}>
                   { auth.user.first_name } { auth.user.last_name }

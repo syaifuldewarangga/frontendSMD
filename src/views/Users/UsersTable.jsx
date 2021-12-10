@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box } from '@mui/system';
-import { Button, TablePagination } from '@mui/material';
+import { Button, TablePagination, TextField, Toolbar } from '@mui/material';
 
 // import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import EditIcon from '@mui/icons-material/Edit';
@@ -31,9 +31,26 @@ function UsersTable(props) {
         props.setRowsPerPage(+event.target.value);
         props.setPage(1);
     };
-    console.log(props.data)
+    
+
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <Toolbar
+                sx={{ 
+                    px: { sm: 2},
+                    py: 2
+                }}
+            >
+                <TextField 
+                    fullWidth
+                    id="outlined-search" 
+                    label="Search field" 
+                    type="search" 
+                    onChange={(e) => {
+                        props.handleUserSearch(e.target.value)
+                    }}
+                />
+            </Toolbar>
             <TableContainer sx={{ maxHeight: 550 }}>
                 <Table stickyHeader aria-label="sticky table">
                 <TableHead>

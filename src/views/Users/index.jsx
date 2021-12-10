@@ -19,7 +19,8 @@ function Users() {
     const [opendDialogDelete, setOpenDialogDelete] = useState(false)
     const [userID, setUserID] = useState()
     const [page, setPage] = React.useState(1);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [searchUser, setSearchUser] = useState('')
     const token = localStorage.getItem('token')
     
     const getUser = async () => {
@@ -35,6 +36,30 @@ function Users() {
             setUser(res.data)
         })
     }
+
+    const handleSearchUser = async () => {
+        await axios.get(smd_url + 'users/search', {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }, 
+            params : {
+                param: searchUser,
+                page: page,
+                itemPerPage: rowsPerPage
+            }
+        }).then((res) => {
+            setUser(res.data)
+        })
+    }
+    
+    useEffect(() => {
+        if(searchUser !== '') {
+            const fieldSearchUser = setTimeout(() => {
+                handleSearchUser()
+            }, 500)
+            return () => clearTimeout(fieldSearchUser)
+        }
+    }, [searchUser])
 
     useEffect(() => {
         getUser()
@@ -95,6 +120,9 @@ function Users() {
                     showDialogDelete = {showDialogDelete}
                     setPage = {(page) => setPage(page)}
                     setRowsPerPage={(itemPerPage) => setRowsPerPage(itemPerPage)}
+                    handleUserSearch = {(value) => {
+                        setSearchUser(value)
+                    }}
                 />
             </Box>
 

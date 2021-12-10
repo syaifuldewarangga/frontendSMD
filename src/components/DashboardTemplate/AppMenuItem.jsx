@@ -35,6 +35,7 @@ function AppMenuItem(props) {
             </ListItemButton>
         )
     }
+    
     const MenuItemChildren = () => {
         return isExpandable ? (
             <Collapse in={open} timeout="auto" unmountOnExit>
