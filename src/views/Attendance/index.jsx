@@ -30,7 +30,6 @@ function Attendance() {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const token = localStorage.getItem('token')
 
-
     const getAttendance = async () => {
         await axios.get(smd_url + 'attendances', {
             headers: {
@@ -51,6 +50,12 @@ function Attendance() {
         getAttendance()
     }, [page, rowsPerPage, dateRange])
 
+    const handleDateRange = (value) => {
+        let from = value[0] !== null ? value[0].toLocaleDateString() : null
+        let to = value[1] !== null ? value[1].toLocaleDateString() : null
+        setDateRange([from, to])
+    }
+
     return (
         <Fragment>
             <Box 
@@ -66,9 +71,7 @@ function Attendance() {
                         startText="From"
                         endText="To"
                         value={dateRange}
-                        onChange={(newValue) => {
-                            setDateRange(newValue)
-                        }}
+                        onChange={(newValue) => handleDateRange(newValue)}
                         renderInput={(startProps, endProps) => (
                         <React.Fragment>
                             <TextField size="small" {...startProps} />

@@ -58,6 +58,8 @@ function Users() {
                 handleSearchUser()
             }, 500)
             return () => clearTimeout(fieldSearchUser)
+        } else {
+            getUser()
         }
     }, [searchUser])
 
