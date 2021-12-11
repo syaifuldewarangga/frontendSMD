@@ -15,6 +15,9 @@ function Positon() {
     const [positionDetail, setPositionDetail] = useState('')
     const [type, setType] = useState('add')
     const [positionID, setPositionID] = useState('')
+    const [errorData, setErrorData] = useState({
+        position_name: ''
+    })
     const token = localStorage.getItem('token')
 
     const getPosition = async () => {
@@ -33,6 +36,11 @@ function Positon() {
 
     const handleDialog = (data) => {
         setOpenDialog(data)
+        if(data === false) {
+            setErrorData({
+                position_name: ''
+            })
+        }
     }
 
     const handleSubmit = async (data) => {
@@ -46,7 +54,13 @@ function Positon() {
             getPosition()
             setOpenDialog(false)
         }).catch((err) => {
-            alert('error')
+            if(err.response.data.errors.reason){
+                setErrorData({
+                    position_name: err.response.data.errors.reason
+                })
+            } else {
+                console.log(err.response)
+            }
         })
     }
 
@@ -94,7 +108,13 @@ function Positon() {
             handleDialog(false)
             getPosition()
         }).catch((err) => {
-            console.log(err.response)
+            if(err.response.data.errors.reason){
+                setErrorData({
+                    position_name: err.response.data.errors.reason
+                })
+            } else {
+                console.log(err.response)
+            }
         })
     }
 
@@ -136,6 +156,7 @@ function Positon() {
                 handleSubmit = {handleSubmit}
                 handleUpdate= {handleUpdate}
                 type={type}
+                errorData = {errorData}
             />
 
             <DeleteDialog 

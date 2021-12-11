@@ -111,7 +111,7 @@ function FormUser(props) {
             }).then(() => {
                 navigate('/master-data/users')
             }).catch((err) => {
-                console.log(err.response)
+                setErrorData(err.response.data.errors.location)
             })
         } else if(props.type === 'edit') {
             await axios.put(`${smd_url}users/update/${data.id}`, {
@@ -137,7 +137,6 @@ function FormUser(props) {
             }).then(() => {
                 navigate('/master-data/users')
             }).catch((err) => {
-                console.log(err.response.data.errors.location)
                 setErrorData(err.response.data.errors.location)
             })
         }

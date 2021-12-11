@@ -28,7 +28,6 @@ function DepartementDialog(props) {
         }
         setData('')
     }
-
     return (
         <div>
             <Dialog 
@@ -52,6 +51,8 @@ function DepartementDialog(props) {
                             variant="standard"
                             name="department_name"
                             required
+                            error={props.errorData.department_name !== '' ? true : false}
+                            helperText={props.errorData.department_name !== '' ? props.errorData.department_name : null}
                             onChange={onChange}
                             value={data.department_name}
                         />

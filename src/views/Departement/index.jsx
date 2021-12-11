@@ -15,6 +15,9 @@ function Departement() {
     const [departmentID, setDepartmentID] = useState('')
     const [departmentDetail, setDepartmentDetail] = useState('')
     const [type, setType] = useState('add')
+    const [errorData, setErrorData] = useState({
+        department_name: ''
+    })
     const token = localStorage.getItem('token')
 
     const getDepertment = async () => {
@@ -33,6 +36,11 @@ function Departement() {
 
     const handleDialog = (data) => {
         setOpenDialog(data)
+        if(data === false) {
+            setErrorData({
+                department_name: ''
+            })
+        }
     }
 
     const handleSubmit = async (data) => {
@@ -47,7 +55,13 @@ function Departement() {
             handleDialog(false)
             getDepertment()
         }).catch((err) => {
-            console.log(err.response)
+            if(err.response.data.errors.reason) {
+                setErrorData({
+                    department_name: err.response.data.errors.reason
+                })
+            } else {
+                console.log(err.response)
+            }
         })
     } 
 
@@ -95,7 +109,13 @@ function Departement() {
             handleDialog(false)
             getDepertment()
         }).catch((err) => {
-            console.log(err.response)
+            if(err.response.data.errors.reason) {
+                setErrorData({
+                    department_name: err.response.data.errors.reason
+                })
+            } else {
+                console.log(err.response)
+            }
         })
     }
 
@@ -136,6 +156,7 @@ function Departement() {
                 handleSubmit = {handleSubmit}
                 handleUpdate = {handleUpdate}
                 type = {type}
+                errorData = {errorData}
             />
 
             <DeleteDialog 

@@ -50,6 +50,8 @@ function PositionDialog(props) {
                             fullWidth
                             variant="standard"
                             name="position_name"
+                            error={props.errorData.position_name !== '' ? true : false}
+                            helperText={props.errorData.position_name !== '' ? props.errorData.position_name : null}
                             onChange={onChange}
                             value={data.position_name}
                         />
