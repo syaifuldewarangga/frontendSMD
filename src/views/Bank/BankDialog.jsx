@@ -1,5 +1,6 @@
 import { DataArray } from '@mui/icons-material'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
+import setDate from 'date-fns/setDate'
 import React, { useEffect, useState } from 'react'
 
 function BankDialog(props) {
@@ -27,6 +28,7 @@ function BankDialog(props) {
         } else if(props.type === 'add') {
             props.handleSubmit(data)
         }
+        setDate('')
     }
 
     return (
